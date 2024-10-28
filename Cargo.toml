@@ -39,7 +39,7 @@ codegen-units = 16
 [dependencies]
 chrono = "0.4"
 clap = "4.5.20"
-arboard = {version = "3.4", optional = true}
+clipboard-ext = {version = "0.2", optional =  true}
 crossbeam-channel = "0.5"
 zbus = {version = "4.4.0", default-features = false, features = ["tokio"], optional = true}
 fern = "0.6"
@@ -100,8 +100,8 @@ pancurses_backend = ["cursive/pancurses-backend", "pancurses/win32"]
 portaudio_backend = ["librespot-playback/portaudio-backend"]
 pulseaudio_backend = ["librespot-playback/pulseaudio-backend"]
 rodio_backend = ["librespot-playback/rodio-backend"]
-share_clipboard = ["arboard", "arboard/wayland-data-control"] # Share a link to the system clipboard
-share_selection = ["arboard", "arboard/wayland-data-control"] # Use the primary selection for sharing - linux and bsd only
+share_clipboard = ["clipboard-ext"] # Share a link to the system clipboard
+share_selection = ["clipboard-ext"] # Use the primary selection for sharing - linux and bsd only
 termion_backend = ["cursive/termion-backend"]
 
 [package.metadata.deb]
