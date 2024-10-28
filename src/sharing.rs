@@ -1,26 +1,24 @@
 #![cfg(feature = "share_clipboard")]
-use arboard::Clipboard;
+use clipboard_ext::prelude::*;
+use clipboard_ext::x11_bin::ClipboardContext;
 use std::error::Error;
 
-#[cfg(feature = "share_selection")]
-use arboard::{GetExtLinux, LinuxClipboardKind, SetExtLinux};
-
 pub fn read_share() -> Result<String, Box<dyn Error>> {
-    let mut ctx = Clipboard::new()?;
+    let mut ctx = ClipboardContext::new()?;
 
     #[cfg(feature = "share_selection")]
-    return Ok(ctx.get().clipboard(LinuxClipboardKind::Primary).text()?);
+    return ctx.get_contents().map_err(Into::into);
 
     #[cfg(not(feature = "share_selection"))]
-    return Ok(ctx.get_text()?);
+    return ctx.get_contents().map_err(Into::into);
 }
 
 pub fn write_share(url: String) -> Result<(), Box<dyn Error>> {
-    let mut ctx = Clipboard::new()?;
+    let mut ctx = ClipboardContext::new()?;
 
     #[cfg(feature = "share_selection")]
-    return Ok(ctx.set().clipboard(LinuxClipboardKind::Primary).text(url)?);
+    return ctx.set_contents(url).map_err(Into::into);
 
     #[cfg(not(feature = "share_selection"))]
-    return Ok(ctx.set_text(url)?);
+    return ctx.set_contents(url).map_err(Into::into);
 }
